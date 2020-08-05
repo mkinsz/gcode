@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"fmt"
@@ -9,7 +9,7 @@ import (
 	"os"
 	"strings"
 
-	"gcode/utils"
+	"gcode/orm"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
@@ -18,8 +18,9 @@ import (
 
 const defaultPort = "8080"
 
-func graphqlHandler() gin.HandlerFunc {
-	h := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+func graphqlHandler(orm *orm.ORM) gin.HandlerFunc {
+	c := generated.Config{Resolvers: &graph.Resolver{ORM: orm}}
+	h := handler.NewDefaultServer(generated.NewExecutableSchema(c))
 	return func(c *gin.Context) {
 		h.ServeHTTP(c.Writer, c.Request)
 	}
@@ -74,12 +75,13 @@ func cors() gin.HandlerFunc {
 }
 
 func init() {
-	host := utils.MustGet("SERVER_HOST")
-	port := utils.MustGet("SERVER_PORT")
-	fmt.Println("Init: ", host, port)
+	// host := utils.MustGet("SERVER_HOST")
+	// port := utils.MustGet("SERVER_PORT")
+	// fmt.Println("Init: ", host, port)
 }
 
-func main() {
+// Run spins up the server
+func Run(orm *orm.ORM) {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = defaultPort
@@ -87,7 +89,7 @@ func main() {
 
 	r := gin.Default()
 	r.Use(cors())
-	r.POST("/graphql", graphqlHandler())
+	r.POST("/graphql", graphqlHandler(orm))
 	r.GET("/", playgroundHandler())
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "pong"})

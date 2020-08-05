@@ -1,6 +1,9 @@
 package graph
 
-import "gcode/graph/model"
+import (
+	"gcode/graph/model"
+	"gcode/orm"
+)
 
 // This file will not be regenerated automatically.
 //
@@ -8,10 +11,6 @@ import "gcode/graph/model"
 
 // Resolver struct
 type Resolver struct {
+	ORM   *orm.ORM
 	users []model.User
 }
-
-// {
-// 	{ID: "1", Name: "Tom"},
-// 	{ID: "2", Name: "Bob"},
-// }

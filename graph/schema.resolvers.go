@@ -15,13 +15,21 @@ func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) 
 	panic(fmt.Errorf("not implemented"))
 }
 
-func (r *mutationResolver) CreateUser(ctx context.Context, input model.NewUser) (*model.User, error) {
+func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput) (*model.User, error) {
 	u := model.User{ID: "3", Name: "Andy"}
 	r.users = append(r.users, u)
 	return &u, nil
 }
 
-func (r *mutationResolver) CreateUsers(ctx context.Context, input []*model.NewUser) ([]*model.User, error) {
+func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UserInput) (*model.User, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *mutationResolver) DeleteUser(ctx context.Context, id *string) (bool, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *mutationResolver) CreateUsers(ctx context.Context, input []*model.UserInput) ([]*model.User, error) {
 	rets := make([]*model.User, 0)
 	for _, p := range input {
 		u := model.User{ID: strconv.Itoa(len(r.users) + 1), Name: p.Name}
@@ -54,9 +62,9 @@ func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
 	return rets, nil
 }
 
-func (r *queryResolver) User(ctx context.Context, input string) (*model.User, error) {
+func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
 	for _, p := range r.users {
-		if p.ID == input {
+		if p.ID == id {
 			return &p, nil
 		}
 	}
