@@ -4,43 +4,54 @@
 
 type Article {
   id: ID!
-  text: String!
+  name: String!
 }
 
-type Todo {
-  id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
+input ArticleInput {
+  name: String!
 }
 
 type User {
   id: ID!
-  name: String!
-  email: String
-}
-
-input NewTodo {
-  text: String!
-  userId: String!
+  email: String!
+  userId: String
+  name: String
+  firstName: String
+  lastName: String
+  nickName: String
+  description: String
+  location: String
+  createAt: Time!
+  updatedAt: Time
 }
 
 input UserInput {
-  name: String!
   email: String
+  userId: String
+  displayName: String
+  name: String
+  firstName: String
+  lastName: String
+  nickName: String
+  description: String
+  location: String
+}
+
+# List Types
+type Users {
+  count: Int # You want to return count for a grid for example
+  list: [User!]! # that is why we need to specify the users object this way
 }
 
 type Query {
-  todos: [Todo!]!
-  article: Article!
-  users: [User!]
-  user(id: ID!): User!
+  users(id: ID): Users!
+  articles: [Article!]
+  article(id: ID!): Article
 }
 
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
   createUser(input: UserInput!): User!
-  updateUser(input: UserInput!): User!
-  deleteUser(id: ID): Boolean!
-  createUsers(input: [UserInput!]): [User!]
+  updateUser(id: ID!, input: UserInput!): User!
+  deleteUser(id: ID!): Boolean!
+  createArticles(input: [ArticleInput!]): [Article!]
 }

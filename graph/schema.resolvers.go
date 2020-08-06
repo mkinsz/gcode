@@ -11,59 +11,30 @@ import (
 	"strconv"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-
-func (r *mutationResolver) CreateUser(ctx context.Context, input model.UserInput) (*model.User, error) {
-	u := model.User{ID: "3", Name: "Andy"}
-	r.users = append(r.users, u)
-	return &u, nil
-}
-
-func (r *mutationResolver) UpdateUser(ctx context.Context, input model.UserInput) (*model.User, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-
-func (r *mutationResolver) DeleteUser(ctx context.Context, id *string) (bool, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-
-func (r *mutationResolver) CreateUsers(ctx context.Context, input []*model.UserInput) ([]*model.User, error) {
-	rets := make([]*model.User, 0)
+func (r *mutationResolver) CreateArticles(ctx context.Context, input []*model.ArticleInput) ([]*model.Article, error) {
+	rets := make([]*model.Article, 0)
 	for _, p := range input {
-		u := model.User{ID: strconv.Itoa(len(r.users) + 1), Name: p.Name}
-		r.users = append(r.users, u)
+		u := model.Article{ID: strconv.Itoa(len(r.articles) + 1), Name: p.Name}
+		r.articles = append(r.articles, u)
 		rets = append(rets, &u)
 	}
 
-	fmt.Println("create users: ", r.users)
+	fmt.Println("create users: ", r.articles)
 
 	return rets, nil
 }
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-
-func (r *queryResolver) Article(ctx context.Context) (*model.Article, error) {
-	return &model.Article{
-		ID:   "1",
-		Text: "I am codinghuang",
-	}, nil
-}
-
-func (r *queryResolver) Users(ctx context.Context) ([]*model.User, error) {
-	rets := make([]*model.User, 0)
-	for i, p := range r.users {
-		rets = append(rets, &r.users[i])
-		fmt.Printf("Users: %p %p\n", &r.users[i], &p)
+func (r *queryResolver) Articles(ctx context.Context) ([]*model.Article, error) {
+	rets := make([]*model.Article, 0)
+	for i, p := range r.articles {
+		rets = append(rets, &r.articles[i])
+		fmt.Printf("Users: %p %p\n", &r.articles[i], &p)
 	}
 	return rets, nil
 }
 
-func (r *queryResolver) User(ctx context.Context, id string) (*model.User, error) {
-	for _, p := range r.users {
+func (r *queryResolver) Article(ctx context.Context, id string) (*model.Article, error) {
+	for _, p := range r.articles {
 		if p.ID == id {
 			return &p, nil
 		}

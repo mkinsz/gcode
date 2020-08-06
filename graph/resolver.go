@@ -11,6 +11,6 @@ import (
 
 // Resolver struct
 type Resolver struct {
-	ORM   *orm.ORM
-	users []model.User
+	ORM      *orm.ORM
+	articles []model.Article
 }
