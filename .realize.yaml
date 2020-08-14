@@ -1,0 +1,52 @@
+settings:
+  files:
+    outputs: false
+    path: ''
+    name: .r.outputs.log
+    logs:
+      status: false
+      path: ''
+      name: .r.logs.log
+    errors:
+      status: false
+      path: ''
+      name: .r.errors.lo
+  legacy:
+    force: false
+    interval: 0s
+# server:
+#   status: true
+#   open: false
+#   port: 8080
+#   host: localhost
+schema:
+- name: gcode
+  path: E:\work\code\gcode
+  commands:
+    # clean:
+    #   status: true
+    # vet:
+    #   status: true
+    # fmt:
+    #   status: true
+    # test:
+    #   status: true
+    # generate:
+    #   status: true
+    install:
+      status: true
+    # build:
+    #   status: true
+    run:
+      status: true
+  watcher:
+    extensions:
+    - go
+    paths:
+    - /
+    ignore:
+      paths:
+      - .git
+      - .realize
+      - .vscode
+      - vendor

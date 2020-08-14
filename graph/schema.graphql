@@ -21,8 +21,9 @@ type User {
   nickName: String
   description: String
   location: String
-  createAt: Time!
+  createdAt: Time!
   updatedAt: Time
+  password: String
 }
 
 input UserInput {
@@ -35,6 +36,7 @@ input UserInput {
   nickName: String
   description: String
   location: String
+  password: String!
 }
 
 # List Types
@@ -44,6 +46,7 @@ type Users {
 }
 
 type Query {
+  user(input: UserInput): Boolean
   users(id: ID): Users!
   articles: [Article!]
   article(id: ID!): Article
@@ -55,3 +58,9 @@ type Mutation {
   deleteUser(id: ID!): Boolean!
   createArticles(input: [ArticleInput!]): [Article!]
 }
+
+#Scalars
+scalar Time
+
+# Any maps to interface{}
+scalar Any

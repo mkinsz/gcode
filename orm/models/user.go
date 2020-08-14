@@ -11,4 +11,5 @@ type User struct {
 	LastName            *string
 	Location            *string `gorm:"size:1048"`
 	Description         *string `gorm:"size:1048"`
+	Password            *string
 }

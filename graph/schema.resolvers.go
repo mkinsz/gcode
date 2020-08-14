@@ -7,14 +7,29 @@ import (
 	"context"
 	"fmt"
 	"gcode/graph/generated"
-	"gcode/graph/model"
+	"gcode/graph/models"
 	"strconv"
 )
 
-func (r *mutationResolver) CreateArticles(ctx context.Context, input []*model.ArticleInput) ([]*model.Article, error) {
-	rets := make([]*model.Article, 0)
+func (r *mutationResolver) CreateUser(ctx context.Context, input models.UserInput) (*models.User, error) {
+	// panic(fmt.Errorf("not implemented"))
+	return userCreateUpdate(r, input, false)
+}
+
+func (r *mutationResolver) UpdateUser(ctx context.Context, id string, input models.UserInput) (*models.User, error) {
+	// panic(fmt.Errorf("not implemented"))
+	return userCreateUpdate(r, input, true, id)
+}
+
+func (r *mutationResolver) DeleteUser(ctx context.Context, id string) (bool, error) {
+	// panic(fmt.Errorf("not implemented"))
+	return userDelete(r, id)
+}
+
+func (r *mutationResolver) CreateArticles(ctx context.Context, input []*models.ArticleInput) ([]*models.Article, error) {
+	rets := make([]*models.Article, 0)
 	for _, p := range input {
-		u := model.Article{ID: strconv.Itoa(len(r.articles) + 1), Name: p.Name}
+		u := models.Article{ID: strconv.Itoa(len(r.articles) + 1), Name: p.Name}
 		r.articles = append(r.articles, u)
 		rets = append(rets, &u)
 	}
@@ -24,8 +39,17 @@ func (r *mutationResolver) CreateArticles(ctx context.Context, input []*model.Ar
 	return rets, nil
 }
 
-func (r *queryResolver) Articles(ctx context.Context) ([]*model.Article, error) {
-	rets := make([]*model.Article, 0)
+func (r *queryResolver) User(ctx context.Context, input *models.UserInput) (*bool, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *queryResolver) Users(ctx context.Context, id *string) (*models.Users, error) {
+	return userList(r, id)
+}
+
+func (r *queryResolver) Articles(ctx context.Context) ([]*models.Article, error) {
+	fmt.Println("articles...")
+	rets := make([]*models.Article, 0)
 	for i, p := range r.articles {
 		rets = append(rets, &r.articles[i])
 		fmt.Printf("Users: %p %p\n", &r.articles[i], &p)
@@ -33,7 +57,7 @@ func (r *queryResolver) Articles(ctx context.Context) ([]*model.Article, error) 
 	return rets, nil
 }
 
-func (r *queryResolver) Article(ctx context.Context, id string) (*model.Article, error) {
+func (r *queryResolver) Article(ctx context.Context, id string) (*models.Article, error) {
 	for _, p := range r.articles {
 		if p.ID == id {
 			return &p, nil

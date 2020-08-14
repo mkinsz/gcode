@@ -18,7 +18,7 @@ func GraphqlHandler(orm *orm.ORM) gin.HandlerFunc {
 		},
 	}
 
-	h := handler.NewDefaultServer(generated.NewExecutableSchema(cfg))
+	h := handler.GraphQL(generated.NewExecutableSchema(cfg))
 
 	return func(c *gin.Context) {
 		h.ServeHTTP(c.Writer, c.Request)

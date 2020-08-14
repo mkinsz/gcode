@@ -10,6 +10,7 @@ import (
 func main() {
 	// Create a new ORM instance to send it to our
 	orm, err := orm.Factory()
+	defer orm.DB.Close()
 	if err != nil {
 		log.Panic(err)
 	}

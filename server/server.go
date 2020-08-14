@@ -13,6 +13,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
+	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
 
@@ -89,11 +90,12 @@ func Run(orm *orm.ORM) {
 
 	r := gin.Default()
 	r.Use(cors())
+	r.Use(static.Serve("/", static.LocalFile("static", false)))
 	r.POST("/graphql", graphqlHandler(orm))
-	r.GET("/", playgroundHandler())
+	r.GET("/playground", playgroundHandler())
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "pong"})
 	})
-	log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
+	log.Printf("connect to http://localhost:%s/playground for GraphQL playground", port)
 	r.Run(":" + port)
 }

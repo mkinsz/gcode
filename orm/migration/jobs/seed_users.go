@@ -8,20 +8,22 @@ import (
 )
 
 var (
-	uname                    = "Test User"
-	fname                    = "Test"
-	lname                    = "User"
-	nname                    = "Foo Bar"
-	description              = "This is the first user ever!"
+	uname                    = "admin"
+	fname                    = "admin"
+	lname                    = "admin"
+	nname                    = "admin"
+	description              = "This is the admin user ever!"
 	location                 = "His house, maybe? Wouldn't know"
+	password                 = "admin"
 	firstUser   *models.User = &models.User{
-		Email:       "test@test.com",
+		Email:       "mkinsz@hotmail.com",
 		Name:        &uname,
 		FirstName:   &fname,
 		LastName:    &lname,
 		NickName:    &nname,
 		Description: &description,
 		Location:    &location,
+		Password:    &password,
 	}
 )
 
