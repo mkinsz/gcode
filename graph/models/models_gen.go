@@ -30,6 +30,11 @@ type User struct {
 	Password    *string    `json:"password"`
 }
 
+type UserAuth struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
 type UserInput struct {
 	Email       *string `json:"email"`
 	UserID      *string `json:"userId"`

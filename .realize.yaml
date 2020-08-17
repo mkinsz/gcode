@@ -14,11 +14,11 @@ settings:
   legacy:
     force: false
     interval: 0s
-# server:
-#   status: true
-#   open: false
-#   port: 8080
-#   host: localhost
+server:
+  status: true
+  open: false
+  port: 8081
+  host: localhost
 schema:
 - name: gcode
   path: E:\work\code\gcode

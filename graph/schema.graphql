@@ -39,6 +39,11 @@ input UserInput {
   password: String!
 }
 
+input UserAuth {
+  email: String!
+  password: String!
+}
+
 # List Types
 type Users {
   count: Int # You want to return count for a grid for example
@@ -46,7 +51,7 @@ type Users {
 }
 
 type Query {
-  user(input: UserInput): Boolean
+  auth(input: UserAuth!): Boolean!
   users(id: ID): Users!
   articles: [Article!]
   article(id: ID!): Article

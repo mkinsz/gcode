@@ -96,6 +96,7 @@ func Run(orm *orm.ORM) {
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "pong"})
 	})
+	r.NoRoute(func(c *gin.Context) { c.File("static/index.html") })
 	log.Printf("connect to http://localhost:%s/playground for GraphQL playground", port)
 	r.Run(":" + port)
 }

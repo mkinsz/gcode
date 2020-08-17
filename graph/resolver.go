@@ -20,7 +20,13 @@ type Resolver struct {
 	articles []models.Article
 }
 
-func userAuth(r *queryResolver, input )
+func userAuth(r *queryResolver, input *models.UserAuth) (bool, error) {
+	if input != nil {
+		fmt.Println("User Auth: ", input)
+	}
+
+	return true, nil
+}
 
 func userCreateUpdate(r *mutationResolver, input models.UserInput, update bool, ids ...string) (*models.User, error) {
 	dbo, err := tf.GQLInputUserToDBUser(&input, update, ids...)

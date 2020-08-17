@@ -39,8 +39,8 @@ func (r *mutationResolver) CreateArticles(ctx context.Context, input []*models.A
 	return rets, nil
 }
 
-func (r *queryResolver) User(ctx context.Context, input *models.UserInput) (*bool, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *queryResolver) Auth(ctx context.Context, input models.UserAuth) (bool, error) {
+	return userAuth(r, &input)
 }
 
 func (r *queryResolver) Users(ctx context.Context, id *string) (*models.Users, error) {
