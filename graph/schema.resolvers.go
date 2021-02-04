@@ -44,7 +44,21 @@ func (r *queryResolver) Auth(ctx context.Context, input models.UserAuth) (bool, 
 }
 
 func (r *queryResolver) Users(ctx context.Context, id *string) (*models.Users, error) {
-	return userList(r, id)
+	// fmt.Println("1UserID: ", id)
+	// return userList(r, id)
+	usrid := string("123")
+	usr := models.User{
+		ID:     "ec17af15-e354-440c-a09f-69715fc8b595",
+		Email:  "your@email.com",
+		UserID: &usrid,
+	}
+
+	list := make([]*models.User, 0)
+	list = append(list, &usr)
+	num := 1
+
+	records := &models.Users{Count: &num, List: list}
+	return records, nil
 }
 
 func (r *queryResolver) Articles(ctx context.Context) ([]*models.Article, error) {

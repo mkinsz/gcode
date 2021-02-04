@@ -35,6 +35,18 @@ func playgroundHandler() gin.HandlerFunc {
 	}
 }
 
+func websocketHandler(hub *Hub) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		log.Printf("Websocket Handler: %v\n", c.Request.RemoteAddr)
+		if c.IsWebsocket() {
+			serveWs(hub, c.Writer, c.Request)
+		} else {
+			_, _ = c.Writer.WriteString("=== Not Websocket Request ===")
+		}
+
+	}
+}
+
 func cors() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		method := c.Request.Method               //请求方法
@@ -87,10 +99,12 @@ func Run(orm *orm.ORM) {
 	if port == "" {
 		port = defaultPort
 	}
-
+	hub := newHub()
+	go hub.run()
 	r := gin.Default()
 	r.Use(cors())
 	r.Use(static.Serve("/", static.LocalFile("static", false)))
+	r.GET("/ws", websocketHandler(hub))
 	r.POST("/graphql", graphqlHandler(orm))
 	r.GET("/playground", playgroundHandler())
 	r.GET("/ping", func(c *gin.Context) {

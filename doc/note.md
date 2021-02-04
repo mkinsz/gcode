@@ -36,3 +36,21 @@ tasklist|findstr "1234"
 ```
 taskmgr
 ```
+
+### Git
+1. 以简短的形式显示版本记录：
+git log --pretty=oneline
+
+2. 版本使用的介绍
+
+前多少个版本：
+HEAD^  版本一
+HEAD^^  版本二
+windows一般用下面的
+HEAD~1  版本一
+HEAD~100 版本一百
+
+3. 查看版本号：
+git reflog 可以看到操作记录
+
+git log --graph --pretty=oneline
